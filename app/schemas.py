@@ -23,6 +23,7 @@ class ConCreate(BaseModel):
     addressline2: Optional[AddLine2Str] = None
     addressline3: AddLine3Str
     addressline4: AddLine4Str
+    #eircode
     weight: WeightInt
 
 class ConRead(BaseModel):
@@ -33,7 +34,16 @@ class ConRead(BaseModel):
     addressline3: AddLine3Str
     addressline4: AddLine4Str
     #eircode
+    #delivery depot
     weight: WeightInt
 
 
+class ConEdit(BaseModel):
+    name: Optional[NameStr] = None
+    addressline1: Optional [AddLine1Str] = None
+    addressline2: Optional[AddLine2Str] = None
+    addressline3: Optional[AddLine3Str] = None
+    addressline4: Optional[AddLine4Str] = None
+    #eircode
+    weight: Optional[WeightInt] = None
 

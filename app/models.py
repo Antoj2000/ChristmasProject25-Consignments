@@ -17,3 +17,4 @@ class ConsignmentDB(Base):
     weight: Mapped[int] = mapped_column(Integer, nullable=False)
     #eircode
     #country
+    #deliverydepot

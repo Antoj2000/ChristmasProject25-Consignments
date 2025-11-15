@@ -4,7 +4,8 @@ from sqlalchemy import select
 from sqlalchemy.orm import Session, selectinload
 from sqlalchemy.exc import IntegrityError
 from .schemas import(
-    ConCreate, ConRead
+    ConCreate, ConRead,
+    ConEdit
 )
 from .models import ConsignmentDB, Base
 
@@ -60,5 +61,25 @@ def create_create(con: ConCreate, db: Session = Depends(get_db)):
     db.refresh(con)
     return con
 
+#Patch Consignment 
+@app.patch("/api/consignment/{id}", response_model=ConRead)
+def edit_consignment(id: int, payload: ConEdit, db: Session = Depends(get_db)):
+    stmt = select(ConsignmentDB).where(ConsignmentDB.id==id)
+    con = db.execute(stmt).scalar_one_or_none()
+    if not con:
+        raise HTTPException(status_code=404, detail="Consignment not found")
+    for key, value in payload.model_dump(exclude_unset=True).items():
+        setattr(con, key, value)
+    commit_or_rollback(db, "Invalid Consignment Details")
+    db.refresh(con)
+    return con
 
     
+#Delete Consignment
+@app.delete("/api/consignment/{id}", status_code=204)
+def delete_consignment(id: int, db: Session = Depends(get_db)):
+    con = db.get(ConsignmentDB, id)
+    if not con:
+        raise HTTPException(status_code=404, detail="Consignment not found")
+    db.delete(con)
+    db.commit()
