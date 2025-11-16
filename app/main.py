@@ -8,6 +8,8 @@ from .schemas import(
     ConEdit
 )
 from .models import ConsignmentDB, Base
+from .pdf_generator import generate_label_pdf
+
 
 app = FastAPI()
 
@@ -54,11 +56,13 @@ def get_con_by_number(id: int, db: Session = Depends(get_db)):
 
 #Create Consignment
 @app.post("/api/consignment", response_model=ConRead, status_code=201)
-def create_create(con: ConCreate, db: Session = Depends(get_db)):
+def create_con(con: ConCreate, db: Session = Depends(get_db)):
     con = ConsignmentDB(**con.model_dump())
     db.add(con)
     commit_or_rollback(db, "Consignment creation failed")
     db.refresh(con)
+    # Generate PDF label
+    generate_label_pdf(con)
     return con
 
 #Patch Consignment 
