@@ -7,7 +7,7 @@ from annotated_types import Ge, Le
 # ------- Resuseable Type Aliases -------
 
 #ConInt
-#AccountStr = Annotated[str, StringConstraints(pattern=r'^A\d{5}$')]
+AccountStr = Annotated[str, StringConstraints(pattern=r'^A\d{5}$')]
 NameStr = Annotated[str, StringConstraints(min_length=3, max_length=30)]
 AddLine1Str = Annotated[str, StringConstraints(min_length=2, max_length=30)]
 AddLine2Str = Annotated[str, StringConstraints(min_length=2, max_length=30)]
@@ -18,6 +18,7 @@ WeightInt = Annotated[int, Ge(1), Le(30)]
 #country
 
 class ConCreate(BaseModel):
+    account_no: AccountStr
     name: NameStr
     addressline1: AddLine1Str
     addressline2: Optional[AddLine2Str] = None
@@ -28,6 +29,7 @@ class ConCreate(BaseModel):
 
 class ConRead(BaseModel):
     id: int #con number will be used soon
+    account_no: AccountStr
     name: NameStr
     addressline1: AddLine1Str
     addressline2: Optional[AddLine2Str] = None
