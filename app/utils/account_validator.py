@@ -5,7 +5,7 @@ import os
 ACCOUNTS_API = os.getenv("ACCOUNTS_API")
 
 def validate_account_exists(account_no: str):
-    print("VALIDATOR RUNNING — checking account:", account_no)
+    
     url = f"{ACCOUNTS_API}/api/accounts/{account_no}"  
 
     try:

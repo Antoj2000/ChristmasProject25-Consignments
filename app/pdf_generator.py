@@ -9,7 +9,7 @@ os.makedirs(LABEL_DIR, exist_ok=True)
 
 def generate_label_pdf(consignment):
 
-    filename = f"label_{consignment.id}.pdf"
+    filename = f"label_{consignment.consignment_number}.pdf"
     filepath = os.path.join(LABEL_DIR, filename)
 
     # Create Blank PDF
@@ -19,7 +19,7 @@ def generate_label_pdf(consignment):
     box_x = 15
     box_y = 150
     box_width = 170
-    box_height = 100
+    box_height = 160
     # Label Layout
     c.setLineWidth(1)
     c.setStrokeColor(colors.black)
@@ -34,7 +34,7 @@ def generate_label_pdf(consignment):
     c.drawString(20, 180, f"{consignment.addressline3}")
     c.drawString(20, 165, f"{consignment.addressline4}")
 
-    c.drawString(20, 130, f"Consignment ID: {consignment.id}")
+    c.drawString(20, 130, f"Consignment ID: {consignment.consignment_number}")
 
     c.drawString(20, 100, f"Weight: {consignment.weight}kg")
 
