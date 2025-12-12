@@ -13,6 +13,7 @@ from .schemas import(
 from .models import ConsignmentDB, Base
 from .pdf_generator import generate_label_pdf
 from .utils.account_validator import validate_account_exists
+from .utils.get_next_con import get_next_con_num
 
 
 @asynccontextmanager
@@ -73,17 +74,24 @@ def get_con_by_number(id: int, db: Session = Depends(get_db)):
 
 #Create Consignment
 @app.post("/api/consignment", response_model=ConRead, status_code=201)
-def create_con(con: ConCreate, db: Session = Depends(get_db)):
+async def create_con(con: ConCreate, db: Session = Depends(get_db)):
     #Check if account exists
     validate_account_exists(con.account_no)
 
-    con = ConsignmentDB(**con.model_dump())
-    db.add(con)
+    #get next con number
+    next_num = await get_next_con_num(con.account_no)
+    
+    con_db = ConsignmentDB(
+        **con.model_dump(),
+        consignment_number=next_num
+    )
+
+    db.add(con_db)
     commit_or_rollback(db, "Consignment creation failed")
-    db.refresh(con)
+    db.refresh(con_db)
     # Generate PDF label
-    generate_label_pdf(con)
-    return con
+    generate_label_pdf(con_db)
+    return con_db
 
 #Patch Consignment 
 @app.patch("/api/consignment/{id}", response_model=ConRead)

@@ -35,6 +35,7 @@ class ConRead(BaseModel):
     addressline2: Optional[AddLine2Str] = None
     addressline3: AddLine3Str
     addressline4: AddLine4Str
+    consignment_number: int
     #eircode
     #delivery depot
     weight: WeightInt
