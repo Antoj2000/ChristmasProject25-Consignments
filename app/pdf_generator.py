@@ -26,6 +26,7 @@ def generate_label_pdf(consignment):
     c.rect(box_x, box_y, box_width, box_height, stroke=1, fill=0)
 
     c.setFont("Helvetica", 10)
+    c.drawString(20, 250, f"{consignment.account_no}")
     c.drawString(20, 230, f"{consignment.name}")
     c.drawString(20, 210, f"{consignment.addressline1}")
     if consignment.addressline2:

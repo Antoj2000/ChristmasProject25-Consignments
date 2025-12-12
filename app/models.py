@@ -9,7 +9,8 @@ class ConsignmentDB(Base):
     __tablename__ = "consignments"
 
     id: Mapped[int] = mapped_column(primary_key=True)
-    name: Mapped[str] = mapped_column(String(30), nullable=False)
+    account_no: Mapped[str] = mapped_column(String)
+    name: Mapped[str] = mapped_column(String(6), unique=False, nullable=False)
     addressline1: Mapped[str] = mapped_column(String(30), nullable=False)
     addressline2: Mapped[str] = mapped_column(String(30), nullable=True)
     addressline3: Mapped[str] = mapped_column(String(30), nullable=False)

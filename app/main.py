@@ -1,4 +1,7 @@
+
+from contextlib import asynccontextmanager
 from fastapi import FastAPI, HTTPException, status, Depends, Response
+from fastapi.middleware.cors import CORSMiddleware
 from .database import SessionLocal, engine
 from sqlalchemy import select
 from sqlalchemy.orm import Session, selectinload
@@ -9,13 +12,27 @@ from .schemas import(
 )
 from .models import ConsignmentDB, Base
 from .pdf_generator import generate_label_pdf
+from .utils.account_validator import validate_account_exists
 
 
-app = FastAPI()
+@asynccontextmanager
+async def lifespan(app: FastAPI):
+    Base.metadata.create_all(bind=engine)
+    yield
+
+app = FastAPI(lifespan=lifespan)
+
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"], # dev-friendly; tighten in prod
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 # Uncomment this line to reset DB
 #Base.metadata.drop_all(bind=engine)
-Base.metadata.create_all(bind=engine)
+#Base.metadata.create_all(bind=engine)
 
 def get_db():
     db = SessionLocal()
@@ -57,6 +74,9 @@ def get_con_by_number(id: int, db: Session = Depends(get_db)):
 #Create Consignment
 @app.post("/api/consignment", response_model=ConRead, status_code=201)
 def create_con(con: ConCreate, db: Session = Depends(get_db)):
+    #Check if account exists
+    validate_account_exists(con.account_no)
+
     con = ConsignmentDB(**con.model_dump())
     db.add(con)
     commit_or_rollback(db, "Consignment creation failed")

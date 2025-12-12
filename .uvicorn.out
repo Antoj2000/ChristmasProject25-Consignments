@@ -1,0 +1,24 @@
+INFO:     Will watch for changes in these directories: ['C:\\Users\\johns\\OneDrive - Atlantic TU\\CICD3\\DPDProject\\ConsignmentsCICD']
+INFO:     Uvicorn running on http://0.0.0.0:8002 (Press CTRL+C to quit)
+INFO:     Started reloader process [59916] using StatReload
+INFO:     Started server process [59460]
+INFO:     Waiting for application startup.
+2025-12-12 01:10:59,017 INFO sqlalchemy.engine.Engine BEGIN (implicit)
+2025-12-12 01:10:59,017 INFO sqlalchemy.engine.Engine PRAGMA main.table_info("consignments")
+2025-12-12 01:10:59,017 INFO sqlalchemy.engine.Engine [raw sql] ()
+2025-12-12 01:10:59,018 INFO sqlalchemy.engine.Engine COMMIT
+INFO:     Application startup complete.
+INFO:     127.0.0.1:56435 - "GET /docs HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56435 - "GET /openapi.json HTTP/1.1" 200 OK
+WARNING:  StatReload detected changes in 'app\main.py'. Reloading...
+ INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [59460]
+INFO:     Started server process [13348]
+INFO:     Waiting for application startup.
+2025-12-12 01:14:13,523 INFO sqlalchemy.engine.Engine BEGIN (implicit)
+2025-12-12 01:14:13,523 INFO sqlalchemy.engine.Engine PRAGMA main.table_info("consignments")
+2025-12-12 01:14:13,523 INFO sqlalchemy.engine.Engine [raw sql] ()
+2025-12-12 01:14:13,523 INFO sqlalchemy.engine.Engine COMMIT
+INFO:     Application startup complete.
