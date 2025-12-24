@@ -50,3 +50,8 @@ class ConEdit(BaseModel):
     #eircode
     weight: Optional[WeightInt] = None
 
+
+class ConList(BaseModel):
+    account_no: AccountStr
+    consignments: List[int]
+
