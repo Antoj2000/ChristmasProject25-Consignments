@@ -17,6 +17,7 @@ class ConsignmentDB(Base):
     addressline4: Mapped[str] = mapped_column(String(30), nullable=False)
     weight: Mapped[int] = mapped_column(Integer, nullable=False)
     consignment_number: Mapped[int] = mapped_column(Integer, nullable=False, unique=True)
+    delivery_depot: Mapped[int] = mapped_column(Integer, nullable=False)
     #eircode
     #country
-    #deliverydepot
+    

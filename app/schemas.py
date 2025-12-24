@@ -37,7 +37,7 @@ class ConRead(BaseModel):
     addressline4: AddLine4Str
     consignment_number: int
     #eircode
-    #delivery depot
+    delivery_depot: int
     weight: WeightInt
 
 
@@ -49,4 +49,9 @@ class ConEdit(BaseModel):
     addressline4: Optional[AddLine4Str] = None
     #eircode
     weight: Optional[WeightInt] = None
+
+
+class ConList(BaseModel):
+    account_no: AccountStr
+    consignments: List[int]
 

@@ -8,12 +8,13 @@ from sqlalchemy.orm import Session, selectinload
 from sqlalchemy.exc import IntegrityError
 from .schemas import(
     ConCreate, ConRead,
-    ConEdit
+    ConEdit, ConList
 )
 from .models import ConsignmentDB, Base
 from .pdf_generator import generate_label_pdf
 from .utils.account_validator import validate_account_exists
 from .utils.get_next_con import get_next_con_num
+from .utils.gazzing import resolve_depot_number
 
 
 @asynccontextmanager
@@ -65,12 +66,38 @@ def list_cons(db: Session = Depends(get_db)):
 
 #Get consignments by con number, id for now
 @app.get("/api/consignment/{id}", response_model=ConRead)
-def get_con_by_number(id: int, db: Session = Depends(get_db)):
+def get_con_by_id(id: int, db: Session = Depends(get_db)):
     stmt = select(ConsignmentDB).where(ConsignmentDB.id==id)
     con = db.execute(stmt).scalar_one_or_none()
     if not con:
         raise HTTPException(status_code=404, detail="Consignment not found")
     return con
+
+#Get consignments by con number
+@app.get("/api/consignment/by-number/{consignment_number}", response_model=ConRead)
+def get_con_by_number(consignment_number: int, db: Session = Depends(get_db)):
+    stmt = select(ConsignmentDB).where(ConsignmentDB.consignment_number==consignment_number)
+    con = db.execute(stmt).scalar_one_or_none()
+    if not con:
+        raise HTTPException(status_code=404, detail="Consignment not found")
+    return con
+
+
+#Get all cons from a particular account 
+@app.get("/api/consignment/account/{account_no}", response_model=ConList)
+async def list_con_for_account(account_no: str, db: Session = Depends(get_db)):
+    validate_account_exists(account_no)
+    stmt = (select(ConsignmentDB.consignment_number)
+            .where(ConsignmentDB.account_no == account_no)
+            .order_by(ConsignmentDB.consignment_number))
+    con = db.execute(stmt).scalars().all()
+    if not con: 
+         raise HTTPException(status_code=404, detail="No Consignments found for this account")
+    return {
+        "account_no": account_no,
+        "consignments": con
+    }
+
 
 #Create Consignment
 @app.post("/api/consignment", response_model=ConRead, status_code=201)
@@ -80,10 +107,13 @@ async def create_con(con: ConCreate, db: Session = Depends(get_db)):
 
     #get next con number
     next_num = await get_next_con_num(con.account_no)
+    #Get depot number
+    depot_number = await resolve_depot_number(con.addressline4)
     
     con_db = ConsignmentDB(
         **con.model_dump(),
-        consignment_number=next_num
+        consignment_number=next_num,
+        delivery_depot=depot_number
     )
 
     db.add(con_db)
