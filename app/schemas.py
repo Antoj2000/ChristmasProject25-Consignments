@@ -37,7 +37,7 @@ class ConRead(BaseModel):
     addressline4: AddLine4Str
     consignment_number: int
     #eircode
-    #delivery depot
+    delivery_depot: int
     weight: WeightInt
 
 

@@ -14,6 +14,7 @@ from .models import ConsignmentDB, Base
 from .pdf_generator import generate_label_pdf
 from .utils.account_validator import validate_account_exists
 from .utils.get_next_con import get_next_con_num
+from .utils.gazzing import resolve_depot_number
 
 
 @asynccontextmanager
@@ -106,10 +107,13 @@ async def create_con(con: ConCreate, db: Session = Depends(get_db)):
 
     #get next con number
     next_num = await get_next_con_num(con.account_no)
+    #Get depot number
+    depot_number = await resolve_depot_number(con.addressline4)
     
     con_db = ConsignmentDB(
         **con.model_dump(),
-        consignment_number=next_num
+        consignment_number=next_num,
+        delivery_depot=depot_number
     )
 
     db.add(con_db)
