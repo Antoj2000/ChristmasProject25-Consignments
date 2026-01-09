@@ -1,10 +1,7 @@
-#tests/conftest.py
+import os
 
-#Sets up a test client for FastAPI using pytest
-from fastapi.testclient import TestClient
-from app.main import app
-import pytest
-
-@pytest.fixture 
-def client():
-    return TestClient(app)  #Simulates HTTP requests to FastAPI app without live server
+# Ensure JWT env vars exist for imports (security.py reads env at import time)
+os.environ.setdefault("JWT_SECRET", "test-secret")
+os.environ.setdefault("JWT_ALG", "HS256")
+os.environ.setdefault("JWT_ISS", "auth-service")
+os.environ.setdefault("JWT_AUD", "dpd-app")

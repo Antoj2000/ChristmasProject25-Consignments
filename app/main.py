@@ -178,7 +178,7 @@ async def edit_consignment(consignment_number: int, payload: ConEdit, db: Sessio
     
     updates = payload.model_dump(exclude_unset=True)
 
-    # If county/addressline4 is being changed, recompute depot
+    # If county/addressline4 is changed, reevaluate depot
     if "addressline4" in updates:
         new_county = updates["addressline4"]
         depot_number = await resolve_depot_number(new_county)
