@@ -87,7 +87,7 @@ async def list_con_for_account(account_no: str, db: Session = Depends(get_db), c
         raise HTTPException(status_code=403, detail="Token not valid for this account")
 
     validate_account_exists(account_no)
-    
+
     stmt = (select(ConsignmentDB.consignment_number)
             .where(ConsignmentDB.account_no == account_no)
             .order_by(ConsignmentDB.consignment_number))
@@ -159,7 +159,7 @@ async def create_con(con: ConCreate, db: Session = Depends(get_db), claims: dict
 
 #Patch Consignment 
 @app.patch("/api/consignment/{consignment_number}", response_model=ConRead)
-def edit_consignment(consignment_number: int, payload: ConEdit, db: Session = Depends(get_db), claims: dict = Depends(get_current_account_claims)):
+async def edit_consignment(consignment_number: int, payload: ConEdit, db: Session = Depends(get_db), claims: dict = Depends(get_current_account_claims)):
 
     stmt = select(ConsignmentDB).where(ConsignmentDB.consignment_number == consignment_number)
     con = db.execute(stmt).scalar_one_or_none()
@@ -173,13 +173,24 @@ def edit_consignment(consignment_number: int, payload: ConEdit, db: Session = De
     if not token_account_no or token_account_no != con.account_no:
         raise HTTPException(
             status_code=403,
-            detail="Token not valid for this account",
+            detail="Token not valid for this account"
         )
-    for key, value in payload.model_dump(exclude_unset=True).items():
+    
+    updates = payload.model_dump(exclude_unset=True)
+
+    # If county/addressline4 is being changed, recompute depot
+    if "addressline4" in updates:
+        new_county = updates["addressline4"]
+        depot_number = await resolve_depot_number(new_county)
+        con.delivery_depot = depot_number
+
+    for key, value in updates.items():
         setattr(con, key, value)
 
     commit_or_rollback(db, "Invalid Consignment Details")
     db.refresh(con)
+    generate_label_pdf(con)
+    
     return con
     
 #Delete Consignment
