@@ -1,217 +1,24 @@
 INFO:     Will watch for changes in these directories: ['C:\\Users\\johns\\OneDrive - Atlantic TU\\CICD3\\DPDProject\\ConsignmentsCICD']
 INFO:     Uvicorn running on http://0.0.0.0:8002 (Press CTRL+C to quit)
-INFO:     Started reloader process [145100] using StatReload
-INFO:     Started server process [139140]
+INFO:     Started reloader process [25804] using StatReload
+INFO:     Started server process [33580]
 INFO:     Waiting for application startup.
-JWT_SECRET: uQ9fK3mP$7xA2!rVw4Zt&B8nH0pL^cS5yG@dJ1qR%F6uM*eT
-JWT_ISS: auth-service
-JWT_AUD: dpd-app
-2026-01-08 18:45:27,865 INFO sqlalchemy.engine.Engine BEGIN (implicit)
-2026-01-08 18:45:27,865 INFO sqlalchemy.engine.Engine PRAGMA main.table_info("consignments")
-2026-01-08 18:45:27,865 INFO sqlalchemy.engine.Engine [raw sql] ()
-2026-01-08 18:45:27,866 INFO sqlalchemy.engine.Engine COMMIT
+2026-01-09 17:00:46,636 INFO sqlalchemy.engine.Engine BEGIN (implicit)
+2026-01-09 17:00:46,636 INFO sqlalchemy.engine.Engine PRAGMA main.table_info("consignments")
+2026-01-09 17:00:46,636 INFO sqlalchemy.engine.Engine [raw sql] ()
+2026-01-09 17:00:46,637 INFO sqlalchemy.engine.Engine COMMIT
 INFO:     Application startup complete.
-INFO:     127.0.0.1:55306 - "POST /api/consignment/auth HTTP/1.1" 401 Unauthorized
-INFO:     127.0.0.1:61501 - "POST /api/consignment/auth HTTP/1.1" 401 Unauthorized
-WARNING:  StatReload detected changes in 'app\security.py'. Reloading...
- INFO:     Shutting down
-INFO:     Waiting for application shutdown.
-INFO:     Application shutdown complete.
-INFO:     Finished server process [139140]
-WARNING:  StatReload detected changes in 'app\security.py'. Reloading...
- INFO:     Started server process [95560]
-INFO:     Waiting for application startup.
-2026-01-08 18:46:36,501 INFO sqlalchemy.engine.Engine BEGIN (implicit)
-2026-01-08 18:46:36,502 INFO sqlalchemy.engine.Engine PRAGMA main.table_info("consignments")
-2026-01-08 18:46:36,502 INFO sqlalchemy.engine.Engine [raw sql] ()
-2026-01-08 18:46:36,502 INFO sqlalchemy.engine.Engine COMMIT
-INFO:     Application startup complete.
-ERROR:    Traceback (most recent call last):
-  File "C:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.13_3.13.2544.0_x64__qbz5n2kfra8p0\Lib\asyncio\runners.py", line 118, in run
-    return self._loop.run_until_complete(task)
-           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^
-  File "C:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.13_3.13.2544.0_x64__qbz5n2kfra8p0\Lib\asyncio\base_events.py", line 725, in run_until_complete
-    return future.result()
-           ~~~~~~~~~~~~~^^
-asyncio.exceptions.CancelledError
-
-During handling of the above exception, another exception occurred:
-
-Traceback (most recent call last):
-  File "C:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.13_3.13.2544.0_x64__qbz5n2kfra8p0\Lib\asyncio\runners.py", line 195, in run
-    return runner.run(main)
-           ~~~~~~~~~~^^^^^^
-  File "C:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.13_3.13.2544.0_x64__qbz5n2kfra8p0\Lib\asyncio\runners.py", line 123, in run
-    raise KeyboardInterrupt()
-KeyboardInterrupt
-
-During handling of the above exception, another exception occurred:
-
-Traceback (most recent call last):
-  File "C:\Users\johns\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.13_qbz5n2kfra8p0\LocalCache\local-packages\Python313\site-packages\starlette\routing.py", line 701, in lifespan
-    await receive()
-  File "C:\Users\johns\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.13_qbz5n2kfra8p0\LocalCache\local-packages\Python313\site-packages\uvicorn\lifespan\on.py", line 137, in receive
-    return await self.receive_queue.get()
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.13_3.13.2544.0_x64__qbz5n2kfra8p0\Lib\asyncio\queues.py", line 186, in get
-    await getter
-asyncio.exceptions.CancelledError
-
-INFO:     Started server process [142672]
-INFO:     Waiting for application startup.
-2026-01-08 18:46:37,938 INFO sqlalchemy.engine.Engine BEGIN (implicit)
-2026-01-08 18:46:37,938 INFO sqlalchemy.engine.Engine PRAGMA main.table_info("consignments")
-2026-01-08 18:46:37,938 INFO sqlalchemy.engine.Engine [raw sql] ()
-2026-01-08 18:46:37,938 INFO sqlalchemy.engine.Engine COMMIT
-INFO:     Application startup complete.
-INFO:     127.0.0.1:49673 - "POST /api/consignment/auth HTTP/1.1" 502 Bad Gateway
-INFO:     127.0.0.1:56939 - "POST /api/consignment/auth HTTP/1.1" 500 Internal Server Error
-ERROR:    Exception in ASGI application
-Traceback (most recent call last):
-  File "C:\Users\johns\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.13_qbz5n2kfra8p0\LocalCache\local-packages\Python313\site-packages\httpx\_transports\default.py", line 101, in map_httpcore_exceptions
-    yield
-  File "C:\Users\johns\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.13_qbz5n2kfra8p0\LocalCache\local-packages\Python313\site-packages\httpx\_transports\default.py", line 394, in handle_async_request
-    resp = await self._pool.handle_async_request(req)
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\johns\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.13_qbz5n2kfra8p0\LocalCache\local-packages\Python313\site-packages\httpcore\_async\connection_pool.py", line 256, in handle_async_request
-    raise exc from None
-  File "C:\Users\johns\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.13_qbz5n2kfra8p0\LocalCache\local-packages\Python313\site-packages\httpcore\_async\connection_pool.py", line 236, in handle_async_request
-    response = await connection.handle_async_request(
-               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-        pool_request.request
-        ^^^^^^^^^^^^^^^^^^^^
-    )
-    ^
-  File "C:\Users\johns\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.13_qbz5n2kfra8p0\LocalCache\local-packages\Python313\site-packages\httpcore\_async\connection.py", line 101, in handle_async_request
-    raise exc
-  File "C:\Users\johns\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.13_qbz5n2kfra8p0\LocalCache\local-packages\Python313\site-packages\httpcore\_async\connection.py", line 78, in handle_async_request
-    stream = await self._connect(request)
-             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\johns\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.13_qbz5n2kfra8p0\LocalCache\local-packages\Python313\site-packages\httpcore\_async\connection.py", line 124, in _connect
-    stream = await self._network_backend.connect_tcp(**kwargs)
-             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\johns\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.13_qbz5n2kfra8p0\LocalCache\local-packages\Python313\site-packages\httpcore\_backends\auto.py", line 31, in connect_tcp
-    return await self._backend.connect_tcp(
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-    ...<5 lines>...
-    )
-    ^
-  File "C:\Users\johns\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.13_qbz5n2kfra8p0\LocalCache\local-packages\Python313\site-packages\httpcore\_backends\anyio.py", line 113, in connect_tcp
-    with map_exceptions(exc_map):
-         ~~~~~~~~~~~~~~^^^^^^^^^
-  File "C:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.13_3.13.2544.0_x64__qbz5n2kfra8p0\Lib\contextlib.py", line 162, in __exit__
-    self.gen.throw(value)
-    ~~~~~~~~~~~~~~^^^^^^^
-  File "C:\Users\johns\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.13_qbz5n2kfra8p0\LocalCache\local-packages\Python313\site-packages\httpcore\_exceptions.py", line 14, in map_exceptions
-    raise to_exc(exc) from exc
-httpcore.ConnectError: All connection attempts failed
-
-The above exception was the direct cause of the following exception:
-
-Traceback (most recent call last):
-  File "C:\Users\johns\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.13_qbz5n2kfra8p0\LocalCache\local-packages\Python313\site-packages\uvicorn\protocols\http\h11_impl.py", line 403, in run_asgi
-    result = await app(  # type: ignore[func-returns-value]
-             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-        self.scope, self.receive, self.send
-        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-    )
-    ^
-  File "C:\Users\johns\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.13_qbz5n2kfra8p0\LocalCache\local-packages\Python313\site-packages\uvicorn\middleware\proxy_headers.py", line 60, in __call__
-    return await self.app(scope, receive, send)
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\johns\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.13_qbz5n2kfra8p0\LocalCache\local-packages\Python313\site-packages\fastapi\applications.py", line 1082, in __call__
-    await super().__call__(scope, receive, send)
-  File "C:\Users\johns\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.13_qbz5n2kfra8p0\LocalCache\local-packages\Python313\site-packages\starlette\applications.py", line 113, in __call__
-    await self.middleware_stack(scope, receive, send)
-  File "C:\Users\johns\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.13_qbz5n2kfra8p0\LocalCache\local-packages\Python313\site-packages\starlette\middleware\errors.py", line 186, in __call__
-    raise exc
-  File "C:\Users\johns\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.13_qbz5n2kfra8p0\LocalCache\local-packages\Python313\site-packages\starlette\middleware\errors.py", line 164, in __call__
-    await self.app(scope, receive, _send)
-  File "C:\Users\johns\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.13_qbz5n2kfra8p0\LocalCache\local-packages\Python313\site-packages\starlette\middleware\cors.py", line 85, in __call__
-    await self.app(scope, receive, send)
-  File "C:\Users\johns\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.13_qbz5n2kfra8p0\LocalCache\local-packages\Python313\site-packages\starlette\middleware\exceptions.py", line 63, in __call__
-    await wrap_app_handling_exceptions(self.app, conn)(scope, receive, send)
-  File "C:\Users\johns\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.13_qbz5n2kfra8p0\LocalCache\local-packages\Python313\site-packages\starlette\_exception_handler.py", line 53, in wrapped_app
-    raise exc
-  File "C:\Users\johns\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.13_qbz5n2kfra8p0\LocalCache\local-packages\Python313\site-packages\starlette\_exception_handler.py", line 42, in wrapped_app
-    await app(scope, receive, sender)
-  File "C:\Users\johns\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.13_qbz5n2kfra8p0\LocalCache\local-packages\Python313\site-packages\starlette\routing.py", line 716, in __call__
-    await self.middleware_stack(scope, receive, send)
-  File "C:\Users\johns\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.13_qbz5n2kfra8p0\LocalCache\local-packages\Python313\site-packages\starlette\routing.py", line 736, in app
-    await route.handle(scope, receive, send)
-  File "C:\Users\johns\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.13_qbz5n2kfra8p0\LocalCache\local-packages\Python313\site-packages\starlette\routing.py", line 290, in handle
-    await self.app(scope, receive, send)
-  File "C:\Users\johns\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.13_qbz5n2kfra8p0\LocalCache\local-packages\Python313\site-packages\starlette\routing.py", line 78, in app
-    await wrap_app_handling_exceptions(app, request)(scope, receive, send)
-  File "C:\Users\johns\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.13_qbz5n2kfra8p0\LocalCache\local-packages\Python313\site-packages\starlette\_exception_handler.py", line 53, in wrapped_app
-    raise exc
-  File "C:\Users\johns\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.13_qbz5n2kfra8p0\LocalCache\local-packages\Python313\site-packages\starlette\_exception_handler.py", line 42, in wrapped_app
-    await app(scope, receive, sender)
-  File "C:\Users\johns\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.13_qbz5n2kfra8p0\LocalCache\local-packages\Python313\site-packages\starlette\routing.py", line 75, in app
-    response = await f(request)
-               ^^^^^^^^^^^^^^^^
-  File "C:\Users\johns\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.13_qbz5n2kfra8p0\LocalCache\local-packages\Python313\site-packages\fastapi\routing.py", line 308, in app
-    raw_response = await run_endpoint_function(
-                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-    ...<3 lines>...
-    )
-    ^
-  File "C:\Users\johns\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.13_qbz5n2kfra8p0\LocalCache\local-packages\Python313\site-packages\fastapi\routing.py", line 219, in run_endpoint_function
-    return await dependant.call(**values)
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\johns\OneDrive - Atlantic TU\CICD3\DPDProject\ConsignmentsCICD\app\main.py", line 144, in create_con
-    depot_number = await resolve_depot_number(con.addressline4)
-                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\johns\OneDrive - Atlantic TU\CICD3\DPDProject\ConsignmentsCICD\app\utils\gazzing.py", line 8, in resolve_depot_number
-    res = await client.post(
-          ^^^^^^^^^^^^^^^^^^
-    ...<2 lines>...
-    )
-    ^
-  File "C:\Users\johns\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.13_qbz5n2kfra8p0\LocalCache\local-packages\Python313\site-packages\httpx\_client.py", line 1859, in post
-    return await self.request(
-           ^^^^^^^^^^^^^^^^^^^
-    ...<13 lines>...
-    )
-    ^
-  File "C:\Users\johns\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.13_qbz5n2kfra8p0\LocalCache\local-packages\Python313\site-packages\httpx\_client.py", line 1540, in request
-    return await self.send(request, auth=auth, follow_redirects=follow_redirects)
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\johns\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.13_qbz5n2kfra8p0\LocalCache\local-packages\Python313\site-packages\httpx\_client.py", line 1629, in send
-    response = await self._send_handling_auth(
-               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-    ...<4 lines>...
-    )
-    ^
-  File "C:\Users\johns\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.13_qbz5n2kfra8p0\LocalCache\local-packages\Python313\site-packages\httpx\_client.py", line 1657, in _send_handling_auth
-    response = await self._send_handling_redirects(
-               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-    ...<3 lines>...
-    )
-    ^
-  File "C:\Users\johns\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.13_qbz5n2kfra8p0\LocalCache\local-packages\Python313\site-packages\httpx\_client.py", line 1694, in _send_handling_redirects
-    response = await self._send_single_request(request)
-               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\johns\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.13_qbz5n2kfra8p0\LocalCache\local-packages\Python313\site-packages\httpx\_client.py", line 1730, in _send_single_request
-    response = await transport.handle_async_request(request)
-               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\johns\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.13_qbz5n2kfra8p0\LocalCache\local-packages\Python313\site-packages\httpx\_transports\default.py", line 393, in handle_async_request
-    with map_httpcore_exceptions():
-         ~~~~~~~~~~~~~~~~~~~~~~~^^
-  File "C:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.13_3.13.2544.0_x64__qbz5n2kfra8p0\Lib\contextlib.py", line 162, in __exit__
-    self.gen.throw(value)
-    ~~~~~~~~~~~~~~^^^^^^^
-  File "C:\Users\johns\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.13_qbz5n2kfra8p0\LocalCache\local-packages\Python313\site-packages\httpx\_transports\default.py", line 118, in map_httpcore_exceptions
-    raise mapped_exc(message) from exc
-httpx.ConnectError: All connection attempts failed
-2026-01-08 18:50:06,742 INFO sqlalchemy.engine.Engine BEGIN (implicit)
-2026-01-08 18:50:06,762 INFO sqlalchemy.engine.Engine INSERT INTO consignments (account_no, name, addressline1, addressline2, addressline3, addressline4, weight, consignment_number, delivery_depot) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
-2026-01-08 18:50:06,763 INFO sqlalchemy.engine.Engine [generated in 0.00239s] ('A05996', 'Anto', '123 Main St', 'Apartment 5B', 'Athlone', 'Westmeath', 2, 6002, 44)
-2026-01-08 18:50:06,769 INFO sqlalchemy.engine.Engine COMMIT
-2026-01-08 18:50:06,776 INFO sqlalchemy.engine.Engine BEGIN (implicit)
-2026-01-08 18:50:06,783 INFO sqlalchemy.engine.Engine SELECT consignments.id, consignments.account_no, consignments.name, consignments.addressline1, consignments.addressline2, consignments.addressline3, consignments.addressline4, consignments.weight, consignments.consignment_number, consignments.delivery_depot 
+INFO:     127.0.0.1:56165 - "POST /api/consignment/auth HTTP/1.1" 401 Unauthorized
+INFO:     127.0.0.1:49705 - "POST /api/consignment/auth HTTP/1.1" 401 Unauthorized
+INFO:     127.0.0.1:64756 - "POST /api/consignment/auth HTTP/1.1" 401 Unauthorized
+2026-01-09 17:21:50,252 INFO sqlalchemy.engine.Engine BEGIN (implicit)
+2026-01-09 17:21:50,266 INFO sqlalchemy.engine.Engine INSERT INTO consignments (account_no, name, addressline1, addressline2, addressline3, addressline4, weight, consignment_number, delivery_depot) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
+2026-01-09 17:21:50,266 INFO sqlalchemy.engine.Engine [generated in 0.00129s] ('A00001', 'Anto', '123 Main St', 'Apartment 5B', 'Athlone', 'Westmeath', 2, 1, 44)
+2026-01-09 17:21:50,270 INFO sqlalchemy.engine.Engine COMMIT
+2026-01-09 17:21:50,277 INFO sqlalchemy.engine.Engine BEGIN (implicit)
+2026-01-09 17:21:50,290 INFO sqlalchemy.engine.Engine SELECT consignments.id, consignments.account_no, consignments.name, consignments.addressline1, consignments.addressline2, consignments.addressline3, consignments.addressline4, consignments.weight, consignments.consignment_number, consignments.delivery_depot 
 FROM consignments 
 WHERE consignments.id = ?
-2026-01-08 18:50:06,783 INFO sqlalchemy.engine.Engine [generated in 0.00034s] (2,)
-2026-01-08 18:50:06,799 INFO sqlalchemy.engine.Engine ROLLBACK
-INFO:     127.0.0.1:61632 - "POST /api/consignment/auth HTTP/1.1" 201 Created
+2026-01-09 17:21:50,290 INFO sqlalchemy.engine.Engine [generated in 0.00033s] (3,)
+2026-01-09 17:21:50,303 INFO sqlalchemy.engine.Engine ROLLBACK
+INFO:     127.0.0.1:64767 - "POST /api/consignment/auth HTTP/1.1" 201 Created
