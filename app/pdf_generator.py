@@ -1,6 +1,9 @@
 from reportlab.pdfgen import canvas
 from reportlab.lib.pagesizes import A6
 from reportlab.lib import colors
+from reportlab.graphics.barcode import code128
+from reportlab.lib.units import mm
+
 import os
 
 
@@ -37,9 +40,36 @@ def generate_label_pdf(consignment):
     c.drawString(20, 260, f"{consignment.addressline3}")
     c.drawString(20, 245, f"{consignment.addressline4}")
 
-    c.drawString(20, 130, f"Consignment ID: {consignment.consignment_number}")
+    # BIG DEPOT NUMBER
+    c.setFont("Helvetica-Bold", 36)
+    c.setFillColor(colors.black)
+
+    # Centered depot number inside the box
+    c.drawCentredString(
+        box_x + box_width / 2 + 40,
+        box_y + box_height - 200,
+        f"{consignment.delivery_depot}"
+    )
+
+    c.setFont("Helvetica", 10)
+
+    c.drawString(20, 130, f"Consignment No: {consignment.consignment_number}")
 
     c.drawString(160, 130, f"Weight: {consignment.weight}kg")
+
+    barcode_value = str(consignment.consignment_number) 
+
+    barcode = code128.Code128(barcode_value, barHeight=18*mm, barWidth=2)
+
+   
+    barcode_x = box_x + (box_width - barcode.width) / 2
+    barcode_y = box_y - 80
+
+    barcode.drawOn(c, barcode_x, barcode_y)
+
+    # Optional: human-readable text under barcode
+    c.setFont("Helvetica", 9)
+    c.drawCentredString(box_x + box_width/2, barcode_y - 12, barcode_value)
 
     c.save()
 
