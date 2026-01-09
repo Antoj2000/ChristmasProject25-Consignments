@@ -15,6 +15,7 @@ from .pdf_generator import generate_label_pdf
 from .utils.account_validator import validate_account_exists
 from .utils.get_next_con import get_next_con_num
 from .utils.gazzing import resolve_depot_number
+from .security import get_current_account_claims
 
 
 @asynccontextmanager
@@ -122,6 +123,39 @@ async def create_con(con: ConCreate, db: Session = Depends(get_db)):
     # Generate PDF label
     generate_label_pdf(con_db)
     return con_db
+
+#Create Consignment w Auth
+@app.post("/api/consignment/auth", response_model=ConRead, status_code=201)
+async def create_con(con: ConCreate, db: Session = Depends(get_db), claims: dict = Depends(get_current_account_claims)):
+    
+    token_account_no = claims.get("account_no")
+    if not token_account_no or token_account_no != con.account_no:
+        raise HTTPException(
+            status_code=403,
+            detail="Token not valid for this account",
+        )
+    
+    #Check if account exists
+    validate_account_exists(con.account_no)
+
+    #get next con number
+    next_num = await get_next_con_num(con.account_no)
+    #Get depot number
+    depot_number = await resolve_depot_number(con.addressline4)
+    
+    con_db = ConsignmentDB(
+        **con.model_dump(),
+        consignment_number=next_num,
+        delivery_depot=depot_number
+    )
+
+    db.add(con_db)
+    commit_or_rollback(db, "Consignment creation failed")
+    db.refresh(con_db)
+    # Generate PDF label
+    generate_label_pdf(con_db)
+    return con_db
+    
 
 #Patch Consignment 
 @app.patch("/api/consignment/{id}", response_model=ConRead)
