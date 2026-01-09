@@ -64,30 +64,30 @@ def list_cons(db: Session = Depends(get_db)):
     stmt = select(ConsignmentDB).order_by(ConsignmentDB.id)
     return db.execute(stmt).scalars().all()
 
-
-#Get consignments by con number, id for now
-@app.get("/api/consignment/{id}", response_model=ConRead)
-def get_con_by_id(id: int, db: Session = Depends(get_db)):
-    stmt = select(ConsignmentDB).where(ConsignmentDB.id==id)
-    con = db.execute(stmt).scalar_one_or_none()
-    if not con:
-        raise HTTPException(status_code=404, detail="Consignment not found")
-    return con
-
 #Get consignments by con number
-@app.get("/api/consignment/by-number/{consignment_number}", response_model=ConRead)
-def get_con_by_number(consignment_number: int, db: Session = Depends(get_db)):
+@app.get("/api/consignment/{consignment_number}", response_model=ConRead)
+def get_con_by_number(consignment_number: int, db: Session = Depends(get_db), claims: dict = Depends(get_current_account_claims)):
     stmt = select(ConsignmentDB).where(ConsignmentDB.consignment_number==consignment_number)
     con = db.execute(stmt).scalar_one_or_none()
     if not con:
         raise HTTPException(status_code=404, detail="Consignment not found")
+    
+    token_account_no = claims.get("account_no")
+    if not token_account_no or token_account_no != con.account_no:
+        raise HTTPException(status_code=403, detail="Token not valid for this account")
+
     return con
 
 
 #Get all cons from a particular account 
 @app.get("/api/consignment/account/{account_no}", response_model=ConList)
-async def list_con_for_account(account_no: str, db: Session = Depends(get_db)):
+async def list_con_for_account(account_no: str, db: Session = Depends(get_db), claims: dict = Depends(get_current_account_claims)):
+    token_account_no = claims.get("account_no")
+    if not token_account_no or token_account_no != account_no:
+        raise HTTPException(status_code=403, detail="Token not valid for this account")
+
     validate_account_exists(account_no)
+    
     stmt = (select(ConsignmentDB.consignment_number)
             .where(ConsignmentDB.account_no == account_no)
             .order_by(ConsignmentDB.consignment_number))
@@ -158,24 +158,46 @@ async def create_con(con: ConCreate, db: Session = Depends(get_db), claims: dict
     
 
 #Patch Consignment 
-@app.patch("/api/consignment/{id}", response_model=ConRead)
-def edit_consignment(id: int, payload: ConEdit, db: Session = Depends(get_db)):
-    stmt = select(ConsignmentDB).where(ConsignmentDB.id==id)
+@app.patch("/api/consignment/{consignment_number}", response_model=ConRead)
+def edit_consignment(consignment_number: int, payload: ConEdit, db: Session = Depends(get_db), claims: dict = Depends(get_current_account_claims)):
+
+    stmt = select(ConsignmentDB).where(ConsignmentDB.consignment_number == consignment_number)
     con = db.execute(stmt).scalar_one_or_none()
     if not con:
-        raise HTTPException(status_code=404, detail="Consignment not found")
+        raise HTTPException(
+            status_code=404, 
+            detail="Consignment not found"
+            )
+    
+    token_account_no = claims.get("account_no")
+    if not token_account_no or token_account_no != con.account_no:
+        raise HTTPException(
+            status_code=403,
+            detail="Token not valid for this account",
+        )
     for key, value in payload.model_dump(exclude_unset=True).items():
         setattr(con, key, value)
+
     commit_or_rollback(db, "Invalid Consignment Details")
     db.refresh(con)
     return con
-
     
 #Delete Consignment
-@app.delete("/api/consignment/{id}", status_code=204)
-def delete_consignment(id: int, db: Session = Depends(get_db)):
-    con = db.get(ConsignmentDB, id)
+@app.delete("/api/consignment/{consignment_number}", status_code=204)
+def delete_consignment(consignment_number: int, db: Session = Depends(get_db), claims: dict = Depends(get_current_account_claims)):
+    stmt = select(ConsignmentDB).where(ConsignmentDB.consignment_number == consignment_number)
+    con = db.execute(stmt).scalar_one_or_none()
     if not con:
-        raise HTTPException(status_code=404, detail="Consignment not found")
+        raise HTTPException(
+            status_code=404, 
+            detail="Consignment not found"
+            )
+    token_account_no = claims.get("account_no")
+    if not token_account_no or token_account_no != con.account_no:
+        raise HTTPException(
+            status_code=403,
+            detail="Token not valid for this account",
+            )
     db.delete(con)
     db.commit()
+    

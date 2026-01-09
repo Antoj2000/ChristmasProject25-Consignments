@@ -42,6 +42,7 @@ class ConRead(BaseModel):
 
 
 class ConEdit(BaseModel):
+    account_no: AccountStr
     name: Optional[NameStr] = None
     addressline1: Optional [AddLine1Str] = None
     addressline2: Optional[AddLine2Str] = None
