@@ -1,4 +1,5 @@
 # app/schemas.py
+from datetime import date
 from pydantic import BaseModel, EmailStr, constr, conint, field_validator, StringConstraints, Field
 from typing import Annotated, Optional, List
 from annotated_types import Ge, Le
@@ -14,7 +15,15 @@ AddLine2Str = Annotated[str, StringConstraints(min_length=2, max_length=30)]
 AddLine3Str = Annotated[str, StringConstraints(min_length=2, max_length=30)]
 AddLine4Str = Annotated[str, StringConstraints(min_length=2, max_length=30)]
 WeightInt = Annotated[int, Ge(1), Le(30)]
-#eircode
+# Irish Eircode in standard format such as "D02 XY76".
+EircodeStr = Annotated[
+    str,
+    StringConstraints(
+        pattern=r"^[AC-FHKNPRTV-Y][0-9]{2}\s?[AC-FHKNPRTV-Y0-9]{4}$",
+        min_length=7,
+        max_length=8,
+    ),
+]
 #country
 
 class ConCreate(BaseModel):
@@ -24,8 +33,12 @@ class ConCreate(BaseModel):
     addressline2: Optional[AddLine2Str] = None
     addressline3: AddLine3Str
     addressline4: AddLine4Str
-    #eircode
+    eircode: EircodeStr
     weight: WeightInt
+    expected_delivery_date: Optional[date] = Field(
+        None,
+        description="Expected delivery date in YYYY‑MM‑DD format.  If omitted, defaults to tomorrow.",
+    )
 
 class ConRead(BaseModel):
     id: int #con number will be used soon
@@ -36,9 +49,12 @@ class ConRead(BaseModel):
     addressline3: AddLine3Str
     addressline4: AddLine4Str
     consignment_number: int
-    #eircode
+    eircode: EircodeStr
     delivery_depot: int
     weight: WeightInt
+    expected_delivery_date: date
+    status: str
+    statusDisplay: str
 
 
 class ConEdit(BaseModel):
@@ -48,8 +64,9 @@ class ConEdit(BaseModel):
     addressline2: Optional[AddLine2Str] = None
     addressline3: Optional[AddLine3Str] = None
     addressline4: Optional[AddLine4Str] = None
-    #eircode
+    eircode: Optional[EircodeStr] = None
     weight: Optional[WeightInt] = None
+    expected_delivery_date: Optional[date] = None
 
 
 class ConList(BaseModel):
