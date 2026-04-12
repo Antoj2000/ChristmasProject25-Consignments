@@ -87,6 +87,7 @@ def to_con_read(con: ConsignmentDB) -> ConRead:
         id=con.id,
         account_no=con.account_no,
         name=con.name,
+        sender_name=con.sender_name,
         addressline1=con.addressline1,
         addressline2=con.addressline2,
         addressline3=con.addressline3,
@@ -95,6 +96,7 @@ def to_con_read(con: ConsignmentDB) -> ConRead:
         consignment_number=con.consignment_number,
         delivery_depot=con.delivery_depot,
         weight=con.weight,
+        shipped_at=con.shipped_at,
         expected_delivery_date=con.expected_delivery_date,
         status=status_code,
         statusDisplay=status_display,
@@ -224,8 +226,11 @@ async def create_con(con: ConCreate, db: Session = Depends(get_db)):
         expected = date.today() + timedelta(days=1)
     # Build the DB object without expected_delivery_date to avoid duplication
     payload = con.model_dump(exclude={"expected_delivery_date"})
+    sender_name = payload.pop("sender_name", None) or "Amazon"
     con_db = ConsignmentDB(
         **payload,
+        sender_name=sender_name,
+        shipped_at=date.today(),
         consignment_number=next_num,
         delivery_depot=depot_number,
         expected_delivery_date=expected,
@@ -260,8 +265,11 @@ async def create_con(con: ConCreate, db: Session = Depends(get_db), claims: dict
         expected = date.today() + timedelta(days=1)
     
     payload = con.model_dump(exclude={"expected_delivery_date"})
+    sender_name = payload.pop("sender_name", None) or "Amazon"
     con_db = ConsignmentDB(
         **payload,
+        sender_name=sender_name,
+        shipped_at=date.today(),
         consignment_number=next_num,
         delivery_depot=depot_number,
         expected_delivery_date=expected,
